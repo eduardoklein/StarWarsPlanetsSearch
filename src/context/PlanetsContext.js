@@ -6,12 +6,16 @@ export const PlanetsContext = createContext();
 export function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
 
+  const [filterInput, setFilterInput] = useState('');
+
+  const [originalArray, setOriginalArray] = useState([]);
+
   function deleteResidents(data) {
     const planetsWithoutResidents = data.map((planet) => {
       delete planet.residents;
       return planet;
     });
-    console.log(planetsWithoutResidents);
+    setOriginalArray(planetsWithoutResidents);
     return planetsWithoutResidents;
   }
 
@@ -23,8 +27,16 @@ export function PlanetsProvider({ children }) {
       });
   }, []);
 
+  const contextObj = {
+    planets,
+    setPlanets,
+    filterInput,
+    setFilterInput,
+    originalArray,
+  };
+
   return (
-    <PlanetsContext.Provider value={ { planets } }>
+    <PlanetsContext.Provider value={ contextObj }>
       {children}
     </PlanetsContext.Provider>
   );

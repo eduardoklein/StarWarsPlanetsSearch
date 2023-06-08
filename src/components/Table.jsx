@@ -2,14 +2,19 @@ import { useContext, useEffect, useState } from 'react';
 import { PlanetsContext } from '../context/PlanetsContext';
 
 export function Table() {
-  const { planets } = useContext(PlanetsContext);
-  const [doesPlanetsExist, setdoesPlanetsExist] = useState(false);
+  const { planets, setPlanets, filterInput } = useContext(PlanetsContext);
+  const [doesPlanetsExist, setDoesPlanetsExist] = useState(false);
 
   useEffect(() => {
     if (planets.length > 0) {
-      setdoesPlanetsExist(true);
+      setDoesPlanetsExist(true);
     }
   }, [planets]);
+
+  useEffect(() => {
+    const newPlanets = planets.filter((element) => element.name.includes(filterInput));
+    setPlanets(newPlanets);
+  }, [filterInput, setPlanets]);
 
   return (
     <div>
