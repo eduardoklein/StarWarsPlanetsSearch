@@ -10,6 +10,10 @@ export function PlanetsProvider({ children }) {
 
   const [originalArray, setOriginalArray] = useState([]);
 
+  const [filterByHeader, setFilterByHeader] = useState('population');
+  const [moreLessEqualThan, setMoreLessEqualThan] = useState('maior que');
+  const [filterByNumber, setFilterByNumber] = useState('0');
+
   function deleteResidents(data) {
     const planetsWithoutResidents = data.map((planet) => {
       delete planet.residents;
@@ -33,6 +37,12 @@ export function PlanetsProvider({ children }) {
     filterInput,
     setFilterInput,
     originalArray,
+    filterByHeader,
+    setFilterByHeader,
+    moreLessEqualThan,
+    setMoreLessEqualThan,
+    filterByNumber,
+    setFilterByNumber,
   };
 
   return (
