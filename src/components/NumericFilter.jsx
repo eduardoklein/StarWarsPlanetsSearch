@@ -10,37 +10,32 @@ export function NumericFilter() {
     filterByHeader,
     moreLessEqualThan,
     filterByNumber,
-    originalArray } = useContext(PlanetsContext);
+    // originalArray, Era usado para resetar o filtro.
+    filters,
+    setFilters } = useContext(PlanetsContext);
 
   function checkIfPlanetsMeetsFilterValue(planet) {
-    console.log(moreLessEqualThan);
-    console.log(filterByHeader);
-    console.log(filterByNumber);
     if (moreLessEqualThan === 'menor que') {
-      console.log('entrou');
       return Number(planet[filterByHeader]) < Number(filterByNumber) && planet;
     }
     if (moreLessEqualThan === 'maior que') {
-      console.log('entrou');
       return Number(planet[filterByHeader]) > Number(filterByNumber) && planet;
     }
     if (moreLessEqualThan === 'igual a') {
-      console.log('entrou');
       return Number(planet[filterByHeader]) === Number(filterByNumber) && planet;
     }
   }
 
   function handleOnClick(event) {
     event.preventDefault();
-    console.log(planets);
     const newPlanets = planets.filter(checkIfPlanetsMeetsFilterValue);
-    console.log(newPlanets);
-
+    const newFilter = { filterByHeader, moreLessEqualThan, filterByNumber };
+    console.log(filters);
+    setFilters((prevFilters) => [...prevFilters, newFilter]);
     setPlanets(newPlanets);
   }
 
   function handleOnChange(event) {
-    setPlanets(originalArray);
     if (event.target.name === 'column-filter') {
       setFilterByHeader(event.target.value);
     } if (event.target.name === 'comparison-filter') {
@@ -96,6 +91,19 @@ export function NumericFilter() {
           Filtrar
 
         </button>
+        { filters.length > 0 && filters.map((filter, cont) => {
+          cont += 1;
+          return (
+            <div key={ cont }>
+              {filter.filterByHeader}
+              /
+              {filter.moreLessEqualThan}
+              /
+              {filter.filterByNumber}
+            </div>
+          );
+        }) }
+
       </form>
     </div>
   );

@@ -14,6 +14,8 @@ export function PlanetsProvider({ children }) {
   const [moreLessEqualThan, setMoreLessEqualThan] = useState('maior que');
   const [filterByNumber, setFilterByNumber] = useState('0');
 
+  const [filters, setFilters] = useState([]);
+
   function deleteResidents(data) {
     const planetsWithoutResidents = data.map((planet) => {
       delete planet.residents;
@@ -43,6 +45,8 @@ export function PlanetsProvider({ children }) {
     setMoreLessEqualThan,
     filterByNumber,
     setFilterByNumber,
+    filters,
+    setFilters,
   };
 
   return (
