@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { PlanetsContext } from '../context/PlanetsContext';
+import { Options } from './Options';
 
 export function NumericFilter() {
   const { setFilterByHeader,
@@ -10,7 +11,7 @@ export function NumericFilter() {
     filterByHeader,
     moreLessEqualThan,
     filterByNumber,
-    // originalArray, Era usado para resetar o filtro.
+    originalArray,
     filters,
     setFilters } = useContext(PlanetsContext);
 
@@ -30,19 +31,25 @@ export function NumericFilter() {
     event.preventDefault();
     const newPlanets = planets.filter(checkIfPlanetsMeetsFilterValue);
     const newFilter = { filterByHeader, moreLessEqualThan, filterByNumber };
-    console.log(filters);
     setFilters((prevFilters) => [...prevFilters, newFilter]);
     setPlanets(newPlanets);
+    setFilterByHeader(newFilter[0]);
   }
 
   function handleOnChange(event) {
     if (event.target.name === 'column-filter') {
       setFilterByHeader(event.target.value);
-    } if (event.target.name === 'comparison-filter') {
+    } else if (event.target.name === 'comparison-filter') {
       setMoreLessEqualThan(event.target.value);
-    } if (event.target.name === 'value-filter') {
+    } else if (event.target.name === 'value-filter') {
       setFilterByNumber(event.target.value);
     }
+  }
+
+  function handleRemoveFilters(event) {
+    event.preventDefault();
+    setPlanets(originalArray);
+    setFilters([]);
   }
 
   return (
@@ -52,13 +59,8 @@ export function NumericFilter() {
           data-testid="column-filter"
           onChange={ handleOnChange }
           name="column-filter"
-          value={ filterByHeader }
         >
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          <Options />
         </select>
         <select
           data-testid="comparison-filter"
@@ -94,16 +96,22 @@ export function NumericFilter() {
         { filters.length > 0 && filters.map((filter, cont) => {
           cont += 1;
           return (
-            <div key={ cont }>
+            <div key={ cont } data-testid="filter">
               {filter.filterByHeader}
               /
               {filter.moreLessEqualThan}
               /
               {filter.filterByNumber}
+              <button>X</button>
             </div>
           );
         }) }
-
+        <button
+          data-testid="button-remove-filters"
+          onClick={ handleRemoveFilters }
+        >
+          Remover filtros
+        </button>
       </form>
     </div>
   );

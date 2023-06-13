@@ -6,6 +6,12 @@ export const PlanetsContext = createContext();
 export function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
 
+  const [options, setOptions] = useState(['population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water']);
+
   const [filterInput, setFilterInput] = useState('');
 
   const [originalArray, setOriginalArray] = useState([]);
@@ -15,6 +21,17 @@ export function PlanetsProvider({ children }) {
   const [filterByNumber, setFilterByNumber] = useState('0');
 
   const [filters, setFilters] = useState([]);
+
+  function manageOptions() {
+    const onlyByHeader = filters.map((header) => header.filterByHeader);
+    const newFilter = options.filter((option) => {
+      if (onlyByHeader.includes(option)) {
+        return null;
+      }
+      return option;
+    });
+    return newFilter;
+  }
 
   function deleteResidents(data) {
     const planetsWithoutResidents = data.map((planet) => {
@@ -47,6 +64,9 @@ export function PlanetsProvider({ children }) {
     setFilterByNumber,
     filters,
     setFilters,
+    options,
+    setOptions,
+    manageOptions,
   };
 
   return (
