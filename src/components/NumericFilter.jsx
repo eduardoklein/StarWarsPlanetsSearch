@@ -1,8 +1,9 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { PlanetsContext } from '../context/PlanetsContext';
 import { Options } from './Options';
 
 export function NumericFilter() {
+  const [tabaquinhas, setTabaquinhas] = useState(0);
   const { setFilterByHeader,
     setMoreLessEqualThan,
     setFilterByNumber,
@@ -13,7 +14,8 @@ export function NumericFilter() {
     filterByNumber,
     originalArray,
     filters,
-    setFilters } = useContext(PlanetsContext);
+    setFilters,
+    manageOptions } = useContext(PlanetsContext);
 
   function checkIfPlanetsMeetsFilterValue(planet) {
     if (moreLessEqualThan === 'menor que') {
@@ -29,14 +31,17 @@ export function NumericFilter() {
 
   function handleOnClick(event) {
     event.preventDefault();
-    const newPlanets = planets.filter(checkIfPlanetsMeetsFilterValue);
-    const newFilter = { filterByHeader, moreLessEqualThan, filterByNumber };
-    setFilters((prevFilters) => [...prevFilters, newFilter]);
-    setPlanets(newPlanets);
-    setFilterByHeader(newFilter[0]);
+    if (filterByHeader && moreLessEqualThan && filterByNumber) {
+      const newPlanets = planets.filter(checkIfPlanetsMeetsFilterValue);
+      const newFilter = { filterByHeader, moreLessEqualThan, filterByNumber };
+      setFilters((prevFilters) => [...prevFilters, newFilter]);
+      setPlanets(newPlanets);
+      manageOptions();
+    }
   }
 
   function handleOnChange(event) {
+    console.log(event.target.value);
     if (event.target.name === 'column-filter') {
       setFilterByHeader(event.target.value);
     } else if (event.target.name === 'comparison-filter') {
@@ -51,6 +56,49 @@ export function NumericFilter() {
     setPlanets(originalArray);
     setFilters([]);
   }
+
+  function duquinhas() {
+    if (!filters.length) {
+      setPlanets(originalArray);
+    }
+    let completeArray = [...originalArray];
+    filters.forEach((filter) => {
+      const teste = completeArray.filter((planet) => {
+        if (filter.moreLessEqualThan === 'menor que') {
+          return Number(planet[filter.filterByHeader])
+          < Number(filter.filterByNumber) && planet;
+        }
+        if (filter.moreLessEqualThan === 'maior que') {
+          return Number(planet[filter.filterByHeader])
+          > Number(filter.filterByNumber) && planet;
+        }
+        if (filter.moreLessEqualThan === 'igual a') {
+          return Number(planet[filter.filterByHeader])
+          === Number(filter.filterByNumber) && planet;
+        }
+        return null;
+      });
+      completeArray = [...teste];
+    });
+    setPlanets(completeArray);
+  }
+
+  function handleRemoveSingularFilter(index, event) {
+    event.preventDefault();
+    index -= 1;
+    const newFilters = filters.filter((element, elementIndex) => {
+      if (elementIndex !== index) {
+        return element;
+      }
+      return null;
+    });
+    setFilters(newFilters);
+    setTabaquinhas(tabaquinhas + 1);
+  }
+
+  useEffect(() => {
+    duquinhas();
+  }, [tabaquinhas]);
 
   return (
     <div>
@@ -102,7 +150,9 @@ export function NumericFilter() {
               {filter.moreLessEqualThan}
               /
               {filter.filterByNumber}
-              <button>X</button>
+              <button onClick={ (event) => handleRemoveSingularFilter(cont, event) }>
+                x
+              </button>
             </div>
           );
         }) }

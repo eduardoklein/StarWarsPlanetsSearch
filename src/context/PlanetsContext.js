@@ -30,6 +30,7 @@ export function PlanetsProvider({ children }) {
       }
       return option;
     });
+    // setFilterByHeader(newFilter[0]);
     return newFilter;
   }
 
