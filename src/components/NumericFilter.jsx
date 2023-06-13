@@ -41,7 +41,6 @@ export function NumericFilter() {
   }
 
   function handleOnChange(event) {
-    console.log(event.target.value);
     if (event.target.name === 'column-filter') {
       setFilterByHeader(event.target.value);
     } else if (event.target.name === 'comparison-filter') {
