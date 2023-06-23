@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { PlanetsContext } from '../context/PlanetsContext';
 import { Options } from './Options';
+import { Sort } from './Sort';
 
 export function NumericFilter() {
   const [tabaquinhas, setTabaquinhas] = useState(0);
@@ -161,6 +162,7 @@ export function NumericFilter() {
         >
           Remover filtros
         </button>
+        <Sort />
       </form>
     </div>
   );

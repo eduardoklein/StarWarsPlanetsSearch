@@ -22,6 +22,8 @@ export function PlanetsProvider({ children }) {
 
   const [filters, setFilters] = useState([]);
 
+  const [sortData, setSortData] = useState([]);
+
   function manageOptions() {
     const onlyByHeader = filters.map((header) => header.filterByHeader);
     const newFilter = options.filter((option) => {
@@ -68,6 +70,8 @@ export function PlanetsProvider({ children }) {
     options,
     setOptions,
     manageOptions,
+    sortData,
+    setSortData,
   };
 
   return (
