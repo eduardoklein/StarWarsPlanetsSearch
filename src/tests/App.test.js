@@ -229,4 +229,39 @@ describe('I am your test', () => {
   const excludeAllFilterButton = screen.getByRole('button', {name: /remover filtros/i})
   userEvent.click(excludeAllFilterButton);
   });
+
+  test('testa o sort asc', async () => {
+    render(
+      <PlanetsProvider>
+        <App />
+      </PlanetsProvider>
+    );
+      const ascRadio = screen.getByRole('radio', {
+        name: /ascendente/i
+      })
+      const sortButton = screen.getByRole('button', {name: /organizar/i})
+      await screen.findByText('Tatooine');
+
+      userEvent.selectOptions(screen.getByTestId('column-sort'), 'population');
+      userEvent.click(ascRadio);
+      userEvent.click(sortButton);
+    });
+
+    test('testa o sort desc', async () => {
+      render(
+        <PlanetsProvider>
+          <App />
+        </PlanetsProvider>
+      );
+        const ascRadio = screen.getByRole('radio', {
+          name: /descendente/i
+        })
+        const sortButton = screen.getByRole('button', {name: /organizar/i})
+        await screen.findByText('Tatooine');
+  
+        userEvent.selectOptions(screen.getByTestId('column-sort'), 'population');
+        userEvent.click(ascRadio);
+        userEvent.click(sortButton);
+      });
 });
+
