@@ -1,10 +1,56 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+# StarWarsPlanetsSearch
+
+Aplicação React para busca e filtragem de planetas do universo Star Wars utilizando a API SWAPI.
+
+## Índice
+
+- [Sobre](#sobre)
+- [Funcionalidades](#funcionalidades)
+- [Tecnologias](#tecnologias)
+- [Instalação](#instalação)
+- [Como usar](#como-usar)
+- [Testes](#testes)
+- [Contribuição](#contribuição)
+- [Licença](#licença)
+
+## Sobre
+
+Este projeto permite pesquisar planetas de Star Wars, aplicar filtros dinâmicos e visualizar informações detalhadas de cada planeta.
+
+## Funcionalidades
+
+- Listagem de planetas
+- Filtro por nome
+- Filtros numéricos (população, diâmetro, etc)
+- Remoção de filtros
+- Ordenação dos resultados
+
+## Tecnologias
+
+- React
+- JavaScript
+- CSS
+- SWAPI (Star Wars API)
+- Jest & Testing Library
+
+## Instalação
+
+```bash
+git clone https://github.com/seu-usuario/StarWarsPlanetsSearch.git
+cd StarWarsPlanetsSearch
+npm install
+```
+
+## Como usar
+
+```bash
+npm start
+```
+
+Acesse `http://localhost:3000` no navegador.
+
+## Testes
+
+```bash
+npm test
+```
